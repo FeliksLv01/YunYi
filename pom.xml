@@ -62,7 +62,7 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>4.1.12</version>
+            <version>5.2.5</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
