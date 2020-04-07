@@ -2,6 +2,7 @@ package com.kcqnly.application.service;
 
 
 import com.kcqnly.application.common.Result;
+import com.kcqnly.application.entity.Role;
 import com.kcqnly.application.entity.User;
 
 /**

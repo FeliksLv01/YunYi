@@ -1,5 +1,6 @@
 package com.kcqnly.application.utils;
 
+import cn.hutool.core.util.StrUtil;
 import com.kcqnly.application.common.Const;
 import com.kcqnly.application.entity.User;
 import io.jsonwebtoken.Claims;
@@ -8,6 +9,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,8 +17,8 @@ import java.util.Map;
 
 /**
  * JWT 工具类
- * @www.codesheep.cn
- * 20190312
+ *
+ * @www.codesheep.cn 20190312
  */
 @Component
 public class JwtTokenUtil implements Serializable {
@@ -36,6 +38,7 @@ public class JwtTokenUtil implements Serializable {
         }
         return username;
     }
+
 
     public Date getCreatedDateFromToken(String token) {
         Date created;
@@ -63,7 +66,7 @@ public class JwtTokenUtil implements Serializable {
         Claims claims;
         try {
             claims = Jwts.parser()
-                    .setSigningKey( Const.SECRET )
+                    .setSigningKey(Const.SECRET)
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {
@@ -96,7 +99,7 @@ public class JwtTokenUtil implements Serializable {
         return Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(generateExpirationDate())
-                .signWith(SignatureAlgorithm.HS512, Const.SECRET )
+                .signWith(SignatureAlgorithm.HS512, Const.SECRET)
                 .compact();
     }
 

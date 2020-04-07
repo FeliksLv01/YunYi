@@ -1,6 +1,7 @@
 package com.kcqnly.application.service;
 
 import com.kcqnly.application.dao.UserDao;
+import com.kcqnly.application.entity.Role;
 import com.kcqnly.application.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,6 +23,12 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("用户不存在");
         }
         return user;
+    }
+
+    public Role getUserRole(String username)
+    {
+       User user= userDao.findByUsername(username);
+       return user.getRole();
     }
 
 }

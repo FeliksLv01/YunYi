@@ -16,10 +16,10 @@ public class Permission implements Serializable {
 
     private String name;
 
-    private String level;
+    private Integer level;
 
     private Integer parentId;
 
-    private String position;
+    private String path;
 
 }
