@@ -54,7 +54,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     public void checkCode(HttpServletResponse resp, String code, String verify_code) {
         if (code == null || verify_code == null || "".equals(code) || !verify_code.toLowerCase().equals(code.toLowerCase())) {
             //验证码不正确
-            System.out.println(code+"   ===>"+verify_code);
             throw new AuthenticationServiceException("验证码不正确");
         }
     }

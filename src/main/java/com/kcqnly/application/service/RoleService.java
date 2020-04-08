@@ -15,6 +15,10 @@ public class RoleService {
     @Autowired
     private RoleDao roleDao;
 
+    public List<Role> findAll() {
+        return roleDao.findAll();
+    }
+
     public List<Permission> findAllPermisiion(int id) {
         Role role = roleDao.findById(id).get();
         return role.getPermissions();
@@ -25,11 +29,14 @@ public class RoleService {
         List<Permission> permissionList1 = new ArrayList<>();
         for (Permission permission : permissionList) {
             int level = permission.getLevel();
-            if (level ==1)
-            {
+            if (level == 1) {
                 permissionList1.add(permission);
             }
         }
         return permissionList1;
+    }
+
+    public Role findById(int id) {
+        return roleDao.findById(id).get();
     }
 }

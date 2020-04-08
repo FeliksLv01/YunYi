@@ -80,7 +80,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             User user = (User) authentication.getPrincipal();
             String token = jwtTokenUtil.generateToken(user);
             UserParam userParam = new UserParam(user, token);
-            Result result = Result.ok("登陆成功", userParam);
+            Result result = Result.ok("登录成功", userParam);
             out.write(JSONUtil.toJsonStr(result));
             out.flush();
             out.close();
@@ -112,26 +112,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeRequests().requestMatchers().permitAll();
-//        httpSecurity.csrf().disable()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-//                .authorizeRequests()
-//                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-//                .antMatchers(HttpMethod.POST, "/authentication/**").permitAll()
-//                .antMatchers(HttpMethod.POST).authenticated()
-//                .antMatchers(HttpMethod.PUT).authenticated()
-//                .antMatchers(HttpMethod.DELETE).authenticated()
-//                .antMatchers(HttpMethod.GET).authenticated();
+        httpSecurity.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll();
+        httpSecurity.csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .authorizeRequests()
+                //第3步：请求权限配置
+                //放行注册API请求，其它任何请求都必须经过身份验证.
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers(HttpMethod.POST).authenticated()
+                .antMatchers(HttpMethod.PUT).authenticated()
+                .antMatchers(HttpMethod.DELETE).authenticated()
+                .antMatchers(HttpMethod.GET).authenticated();
         //第2步：让Security永远不会创建HttpSession，它不会使用HttpSession来获取SecurityContext
         httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().headers().cacheControl();
-        //第3步：请求权限配置
-        //放行注册API请求，其它任何请求都必须经过身份验证.
-        httpSecurity.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/user/register").permitAll()
+
         //没有认证时，在这里处理结果，不要重定向
-                .and()
-                .csrf().disable().exceptionHandling()
+        httpSecurity
+                .exceptionHandling()
                 .authenticationEntryPoint(new AuthenticationEntryPoint() {
             @Override
             public void commence(HttpServletRequest req, HttpServletResponse resp, AuthenticationException authException) throws IOException, ServletException {

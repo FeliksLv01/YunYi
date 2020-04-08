@@ -22,14 +22,7 @@ class ApplicationTests {
 
     @Test
     void contextLoads() {
-        User user=new User();
-        user.setState(true);
-        user.setRole(roleDao.findById(1).get());
-        user.setPassword(new BCryptPasswordEncoder().encode("123456"));
-        user.setEmail("1345678@qq.com");
-        user.setMobile("13658943455");
-        user.setCreateTime(new Date());
-        userDao.save(user);
+        userDao.updateState(10,false);
     }
 
 }
