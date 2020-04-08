@@ -37,4 +37,10 @@ public class Result {
         this.data = data;
     }
 
+    public static Result error(String msg) {
+        return new Result(500, msg, null);
+    }
+    public static Result ok(String msg,Object data) {
+        return new Result(200, msg, data);
+    }
 }
