@@ -43,4 +43,8 @@ public class Result {
     public static Result ok(String msg,Object data) {
         return new Result(200, msg, data);
     }
+
+    public static Result ok(Object data) {
+        return new Result(200, "成功", data);
+    }
 }

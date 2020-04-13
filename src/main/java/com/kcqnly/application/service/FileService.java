@@ -77,7 +77,7 @@ public class FileService {
         JSONObject parseObj = JSONUtil.parseObj(HttpUtil.post(peersUrl + GoFastDfsApi.GET_FILE_INFO, param));
         if(parseObj.getStr(STATUS).equals(STATUS_OK)) {
             FileDetails fileDetails = JSONUtil.toBean(parseObj.getStr("data"), FileDetails.class);
-            fileDetails.setSize(FileUtil.getLength(Long.valueOf(fileDetails.getSize())));
+            fileDetails.setSize(FileUtil.getLength(fileDetails.getSize()));
             fileDetails.setTimeStamp(TimeUtil.getFormatDate(new Date(Long.valueOf(fileDetails.getTimeStamp())* 1000)));
             return new Result(Result.AJAX_SUCCESS,"获取成功",fileDetails);
         }

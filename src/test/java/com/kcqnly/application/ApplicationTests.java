@@ -1,28 +1,30 @@
 package com.kcqnly.application;
 
 
-import com.kcqnly.application.dao.RoleDao;
-import com.kcqnly.application.dao.UserDao;
-import com.kcqnly.application.entity.User;
+import cn.hutool.json.JSON;
+import cn.hutool.json.JSONUtil;
+import com.kcqnly.application.common.ConvertTree;
+import com.kcqnly.application.common.TreeNode;
+import com.kcqnly.application.dao.PermissionDao;
+import com.kcqnly.application.entity.Permission;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.annotation.Resource;
-import java.util.Date;
+import java.util.List;
 
 @SpringBootTest
 class ApplicationTests {
 
     @Autowired
-    UserDao userDao;
+    PermissionDao permissionDao;
     @Autowired
-    RoleDao roleDao;
-
+    ConvertTree<Permission> permissionConvertTree;
     @Test
     void contextLoads() {
-        userDao.updateState(10,false);
+        List<TreeNode<Permission>> res = permissionConvertTree.getForest(permissionDao.findAll());
+        JSON object = JSONUtil.parse(res);
+        System.out.println(object.toString());
     }
 
 }

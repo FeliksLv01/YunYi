@@ -85,4 +85,8 @@ public class UserService implements UserDetailsService {
     {
         userDao.deleteById(id);
     }
+
+    public List<User> findAll() {
+        return userDao.findAll();
+    }
 }

@@ -36,31 +36,39 @@ public class UserController {
     @Autowired
     private PermissionService permissionService;
 
-    // 测试普通权限
+
     @PreAuthorize("hasAuthority('控制台')")
     @RequestMapping(value = "/normal/test", method = RequestMethod.GET)
     public String test1() {
         return "101接口调用成功！";
     }
 
-    // 测试管理员权限
+
     @PreAuthorize("hasAuthority('用户列表')")
     @GetMapping("/users")
     public Result getUserList(String query, int pageNum, int pageSize) {
-        //从0开始
-        List<User> userList = userService.findAll(pageNum - 1, pageSize);
-        List<UserParam> userParams = new ArrayList<>();
-        for (User user : userList) {
-            if (StrUtil.isEmpty(query) || StrUtil.isBlank(query)) {
+
+        if (StrUtil.isEmpty(query) || StrUtil.isBlank(query)) {
+            List<UserParam> userParams = new ArrayList<>();
+            List<User> userList = userService.findAll(pageNum - 1, pageSize);
+            for (User user : userList) {
                 userParams.add(new UserParam(user));
-            } else {
+            }
+            UserList res = new UserList(userService.getTotal(), pageNum, userParams);
+            return Result.ok("获取用户列表成功", res);
+        } else {
+            List<UserParam> userParams = new ArrayList<>();
+            List<User> userList = userService.findAll();
+            for (User user : userList) {
                 if (user.getUsername().contains(query)) {
                     userParams.add(new UserParam(user));
                 }
             }
+            UserList res = new UserList(userParams.size(), pageNum, userParams);
+            return Result.ok("查询成功", res);
         }
-        UserList res = new UserList(userService.getTotal(), pageNum, userParams);
-        return Result.ok("获取用户列表成功", res);
+
+
     }
 
     @PreAuthorize("hasAuthority('添加用户')")
