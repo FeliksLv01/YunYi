@@ -9,11 +9,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface UserDao extends JpaRepository<User,Integer> , JpaSpecificationExecutor<User> {
     User findByUsername( String username);
 
     User save(User user);
 
+
+    List<User> findByUsernameLike(String name);
 
     @Modifying
     @Query(value="UPDATE user SET state=:state WHERE id=:id",nativeQuery = true)

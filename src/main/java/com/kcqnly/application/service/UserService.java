@@ -39,6 +39,12 @@ public class UserService implements UserDetailsService {
     {
         return userDao.findByUsername(username);
     }
+
+    public List<User> findByUsernameLike(String name)
+    {
+        return userDao.findByUsernameLike("%"+name+"%");
+    }
+
     public Role getUserRole(String username)
     {
        User user= userDao.findByUsername(username);

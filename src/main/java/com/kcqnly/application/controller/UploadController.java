@@ -21,19 +21,17 @@ public class UploadController {
     @Value("fileServer.showUrl")
     private String showUrl;
 
-    @Value("fileServer.scene")
-    private String scene;
-
-    @PostMapping("/file/upload/{path}")
+    @PostMapping("/file/upload/")
     @PreAuthorize("hasAuthority('文件列表')")
-    public Result moreFileUpload(@RequestBody MultipartFile file,@PathVariable String path){
-        if(file.isEmpty()) {
+    public Result moreFileUpload(@RequestBody MultipartFile file,  String path) {
+        String scene = path;
+        if (file.isEmpty()) {
             return Result.error("请选择文件");
         }
-        if (StrUtil.isBlank(path)|| StrUtil.isEmpty(path))
-        {
-            path="default";
+        if (path.contains("/")) {
+            scene = path.substring(0, path.lastIndexOf("/"));
         }
-        return UploadUtil.upload(tempPath,serverUrl + GoFastDfsApi.UPLOAD, path, scene, file,showUrl);
+        //path="img/壁纸" scene="img"
+        return UploadUtil.upload(tempPath, serverUrl + GoFastDfsApi.UPLOAD, path, scene, file, showUrl);
     }
 }

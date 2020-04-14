@@ -15,7 +15,7 @@ public class RoleParam {
 
     private String description;
 
-    private List<TreeNode<Permission>> children;
+    private List<PermissionTree> children;
 
     public RoleParam(Role role)
     {

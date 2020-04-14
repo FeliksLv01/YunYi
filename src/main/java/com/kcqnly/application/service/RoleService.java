@@ -40,4 +40,33 @@ public class RoleService {
         return roleDao.findById(id).get();
     }
 
+    public void save(Role role)
+    {
+        roleDao.save(role);
+    }
+
+    public void updateRole(int id,Role role)
+    {
+        roleDao.updateRole(id,role.getName(),role.getDescription());
+    }
+
+    public void deleteById(int id)
+    {
+        roleDao.deleteById(id);
+    }
+
+    public List<Permission> deletePermissionById(int id,int rightId)
+    {
+        roleDao.deletePermissionById(id,rightId);
+        List<Permission> permissionList = roleDao.findById(id).get().getPermissions();
+        return permissionList;
+    }
+
+    public void updatePermission(int id,List<Permission> permissions)
+    {
+        Role role = roleDao.findById(id).get();
+        role.setPermissions(permissions);
+        roleDao.save(role);
+    }
+
 }

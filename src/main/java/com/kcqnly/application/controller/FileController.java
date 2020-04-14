@@ -1,5 +1,7 @@
 package com.kcqnly.application.controller;
 
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.kcqnly.application.common.Result;
 import com.kcqnly.application.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +46,7 @@ public class FileController {
      * @param dir
      * @return AjaxResult
      */
-    @RequestMapping("/file/getDirFile")
+    @GetMapping("/file/getDirFile")
     @PreAuthorize("hasAuthority('文件列表')")
     public Result getDirFile(@RequestParam("dir") String dir) {
         return Result.ok( fileService.getDirFile(showUrl, url, dir));
@@ -68,11 +70,12 @@ public class FileController {
     /**
      * 文件信息
      *
-     * @param md5
+     * @param
      * @return AjaxResult
      */
-    @RequestMapping("/file/details")
-    public Result details(String md5) {
+    @PostMapping("/file/details")
+    @PreAuthorize("hasAuthority('文件列表')")
+    public Result details( String md5) {
         return fileService.details(url, md5);
     }
 
@@ -81,11 +84,11 @@ public class FileController {
      *
      * @param path
      * @param name
-     * @param request
      * @param response
      */
-    @RequestMapping("/file/downloadFile")
-    public void downloadFile(String path, String name, HttpServletRequest request, HttpServletResponse response) {
+    @PreAuthorize("hasAuthority('下载')")
+    @GetMapping("/file/downloadFile")
+    public void downloadFile(String path,String name, HttpServletResponse response) {
         response.setHeader("Content-Disposition", "attachment;filename=" + name);
         response.setContentType("application/octet-stream");
         BufferedInputStream in = null;

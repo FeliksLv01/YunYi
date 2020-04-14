@@ -72,7 +72,7 @@ public class FileUtil {
             for (int i = 0;i < parseArray.size();i++) {
                 FileResult fileResult = new FileResult();
                 JSONObject file = JSONUtil.parseObj(parseArray.getStr(i));
-                if(file.getStr("name").equals("_tmp")){
+                if(file.getStr("name").equals("_tmp")||file.getStr("name").equals("_big")){
                     continue;
                 }
                 fileResult.setMd5(file.getStr("md5"));
@@ -92,6 +92,18 @@ public class FileUtil {
             }
         }
         return files;
+    }
+
+    /***
+     * 从路径中获取scene
+     * 例： path:img/壁纸/日常/风景 scene：img/壁纸/日常
+     * @param path
+     * @return
+     */
+    public static String getScene(String path)
+    {
+        return null;
+
     }
 
 }

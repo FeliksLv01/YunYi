@@ -13,5 +13,5 @@ public class FileDetails {
     private String md5;
     private String scene;
     private String timeStamp;
-    private List<String> peers;
+//    private List<String> peers;
 }
