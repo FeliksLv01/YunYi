@@ -1,7 +1,5 @@
 package com.kcqnly.application.model;
 
-import com.kcqnly.application.common.TreeNode;
-import com.kcqnly.application.entity.Permission;
 import com.kcqnly.application.entity.Role;
 import lombok.Data;
 

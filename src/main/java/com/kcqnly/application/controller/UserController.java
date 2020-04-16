@@ -4,12 +4,16 @@ import cn.hutool.core.util.StrUtil;
 import com.kcqnly.application.common.Result;
 import com.kcqnly.application.entity.Role;
 import com.kcqnly.application.entity.User;
+import com.kcqnly.application.model.UserInfo;
 import com.kcqnly.application.model.UserList;
 import com.kcqnly.application.model.UserParam;
 import com.kcqnly.application.service.RoleService;
 import com.kcqnly.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +29,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private RoleService roleService;
-
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PreAuthorize("hasAuthority('用户列表')")
     @GetMapping("/users")
@@ -109,5 +114,38 @@ public class UserController {
     public Result changeRole(@PathVariable("id") int id, @RequestBody Role role) {
         UserParam userParam = new UserParam(userService.updateRole(id, role.getId()));
         return Result.ok("成功", userParam);
+    }
+
+    /**
+     * 用户个人设置
+     *
+     * @param authentication
+     * @return
+     */
+    @GetMapping("/users/info")
+    public Result getCurrentUser(Authentication authentication) {
+
+        User user = (User) authentication.getPrincipal();
+        UserInfo userInfo = new UserInfo(user);
+        return Result.ok(userInfo);
+    }
+
+    @PostMapping("/users/checkPass")
+    public Result checkPassword(Authentication authentication, String password) {
+        User user = (User) authentication.getPrincipal();
+        if (bCryptPasswordEncoder.matches(password, user.getPassword())) {
+            return Result.ok(null);
+        } else {
+            return Result.error("原密码错误");
+        }
+    }
+
+    @PostMapping("/users/updatePassword")
+    public Result updatePassword(Authentication authentication,String password)
+    {
+        User user = (User) authentication.getPrincipal();
+        user.setPassword(bCryptPasswordEncoder.encode(password));
+        userService.save(user);
+        return Result.ok("更新密码成功",null);
     }
 }

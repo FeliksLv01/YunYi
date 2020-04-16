@@ -1,15 +1,12 @@
 package com.kcqnly.application.controller;
 
-import com.kcqnly.application.common.ConvertTree;
 import com.kcqnly.application.common.Result;
-import com.kcqnly.application.common.TreeNode;
 import com.kcqnly.application.entity.Permission;
 import com.kcqnly.application.entity.Role;
 import com.kcqnly.application.model.PermissionTree;
 import com.kcqnly.application.model.RoleParam;
 import com.kcqnly.application.service.RoleService;
 import com.kcqnly.application.utils.TreeUtil;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

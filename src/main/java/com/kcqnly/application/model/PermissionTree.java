@@ -1,10 +1,8 @@
 package com.kcqnly.application.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.kcqnly.application.common.ConvertTree;
 import com.kcqnly.application.common.TreeFid;
 import com.kcqnly.application.common.TreeId;
-import com.kcqnly.application.common.TreeNode;
 import com.kcqnly.application.entity.Permission;
 import com.kcqnly.application.utils.TreeUtil;
 import lombok.AllArgsConstructor;
