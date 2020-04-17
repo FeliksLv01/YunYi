@@ -93,7 +93,7 @@ public class FileController {
         response.setContentType("application/octet-stream");
         BufferedInputStream in = null;
         try {
-            URL url1 = new URL(url + "/" + path + "/" + name);
+            URL url1 = new URL(url + "/" + path + "/" + name.replaceAll(" ","%20"));
             in = new BufferedInputStream(url1.openStream());
             response.reset();
             response.setContentType("application/octet-stream");
