@@ -9,19 +9,17 @@ Vue+SpringBoot+GoFastdfs实现的虚假云盘
 ## 演示页面
 
 登录页
-![登录](/img/login.png)
+![登录](https://i.loli.net/2020/06/12/HRavt51PjIOUoAb.png)
 控制台
-![控制台](/img/console.png)
+![控制台](https://i.loli.net/2020/06/12/IKJaGQROdk6jW2A.png)
 用户管理
-![用户管理](/img/user.png)
+![用户管理](https://i.loli.net/2020/06/12/71sxB5eRThOn8t2.png)
 角色管理
-![角色管理](/img/role.png)
+![角色管理](https://i.loli.net/2020/06/12/faqhvA3FENil9nz.png)
 上传文件
-![upload](/img/upload.png)
+![upload](https://i.loli.net/2020/06/12/2X6w91mlGsVYzEK.png)
 文件列表
-![file](/img/file.png)
-全屏
-![全屏](/img/console1.png)
+![file](https://i.loli.net/2020/06/12/rjEqyztgRF1m4n5.png)
 
 ## 后端技术栈
 
