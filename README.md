@@ -1,6 +1,6 @@
 # YunYi
 
-Vue+SpringBoot+GoFastdfs实现的虚假云盘
+Vue+SpringBoot+go-fastdfs实现的虚假云盘
 
 ## 前端项目地址
 
