@@ -11,7 +11,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +27,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             try {
                 loginData = new ObjectMapper().readValue(request.getInputStream(), Map.class);
             } catch (IOException e) {
+                System.out.println(e.toString());
             }finally {
                 String code =  loginData.get("code");
                 checkCode(response, code, verify_code);

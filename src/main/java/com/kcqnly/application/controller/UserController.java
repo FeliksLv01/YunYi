@@ -10,10 +10,8 @@ import com.kcqnly.application.model.UserParam;
 import com.kcqnly.application.service.RoleService;
 import com.kcqnly.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,10 +61,10 @@ public class UserController {
         if (userService.findByUsername(user.getUsername()) != null) {
             return Result.error("用户名已存在");
         }
-        String rawpassword = user.getPassword();
+        String rawPassword = user.getPassword();
         user.setState(true);
         user.setRole(roleService.findById(1));
-        user.setPassword(new BCryptPasswordEncoder().encode(rawpassword));
+        user.setPassword(new BCryptPasswordEncoder().encode(rawPassword));
         user.setCreateTime(new Date());
         userService.save(user);
         return Result.ok("添加成功", new UserParam(user));
@@ -82,14 +80,13 @@ public class UserController {
     /**
      * 编辑用户信息时，弹框内的用户数据
      *
-     * @param id
-     * @return
      */
     @PreAuthorize("hasAuthority('用户列表')")
     @GetMapping("/users/{id}")
     public Result search(@PathVariable("id") int id) {
-        UserParam userParam = new UserParam(userService.findById(id));
-        if (userParam != null) {
+        User user =userService.findById(id);
+        if (user!=null) {
+            UserParam userParam = new UserParam(user);
             return Result.ok("搜索成功", userParam);
         }
         return Result.error("用户id不存在");
@@ -119,8 +116,6 @@ public class UserController {
     /**
      * 用户个人设置
      *
-     * @param authentication
-     * @return
      */
     @GetMapping("/users/info")
     public Result getCurrentUser(Authentication authentication) {
